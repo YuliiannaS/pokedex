@@ -32,4 +32,4 @@ let pokemon5 = {
 pokemonList.push(pokemon1);
 pokemonList.push(pokemon2);
 pokemonList.push(pokemon3);
-console.log(pokemonList)
+console.log(pokemonList);
