@@ -1,26 +1,33 @@
 const pokemonRepository = (function (){
     let pokemonList = [
-      {
-          name: "Pikachu",
-          height: 4,
-          types: ['electric']
-      },
-      {
-          name: "Charizard",
-          height: 17,
-          types: ['fire', 'flying']
-      },
-      {
-          name: "Squirtle",
-          height: 5,
-          types: ['water']
-      },
-    ];
+        {
+            name: "Pikachu",
+            height: 4,
+            types: ['electric']
+        },
+        {
+            name: "Charizard",
+            height: 17,
+            types: ['fire', 'flying']
+        },
+        {
+            name: "Squirtle",
+            height: 5,
+            types: ['water']
+        },
+      ];
+    
+    // Show pokemon details
+    function showDetails(pokemon) {
+      console.log(pokemon);
+    }
     
     return {
+    // Get all pokemons
         getAll: function() {
           return pokemonList;
       },
+      // Add pokemon
       add: function(pokemon) {
         if (typeof pokemon !== "object") {
           return false;
@@ -33,44 +40,33 @@ const pokemonRepository = (function (){
         }
           pokemonList.push(pokemon);
       },
+      // Get one pokemon by name
       filter: function(name) {
-        return pokemonList.find(function (pokemon) {
+        pokemonList.find(function(pokemon) {
           return pokemon.name === name;
+        })
+      },
+      // Add button to the list
+      addListItem: function(pokemon) {
+          const ul = document.querySelector("ul");
+        const li = document.createElement("li");
+        const button = document.createElement("button");
+        
+        button.innerText = pokemon.name;
+        // Addd click listener
+        button.addEventListener("click", function() {
+          showDetails(pokemon);
         });
+        
+        li.appendChild(button);
+        ul.appendChild(li);
       },
     };
   })();
   
-  const newPokemon = {
-        name: "Jigglypuff",
-        height: 5,
-        types: ['normal', 'fairy']
-      };
-  pokemonRepository.add(newPokemon);
+  // Get all pokemons
   const pokemons = pokemonRepository.getAll();
-  
+  // Iterate and print all pokemons
   pokemons.forEach(function (pokemon) {
-      document.write(
-        pokemon.name + " (height: " + pokemon.height + ")"
-      );
-      if (pokemon.height > 10) {
-        document.write(
-          " Wow, that’s big"
-        );
-      }
-      document.write("<br>");
-    });
-    
-  document.write("<h1>My pokemon:</h1>")
-  const my = pokemonRepository.filter("Pikachu");
-  document.write(
-        my.name + " (height: " + my.height + ")"
-      );
-      if (my.height > 10) {
-        document.write(
-          " Wow, that’s big"
-        );
-      }
-    
-
-console.log(pokemonRepository);
+    pokemonRepository.addListItem(pokemon);
+  });
