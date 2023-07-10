@@ -21,48 +21,51 @@ const pokemonRepository = (function () {
     function showDetails(pokemon) {
         console.log(pokemon);
     }
+    // Get all pokemons
+    function getAll() {
+        return pokemonList;
+    }
+    // Add pokemon
+    function add(pokemon) {
+        if (typeof pokemon !== "object") {
+            return false;
+        }
+        if (typeof pokemon.height !== "number") {
+            return false;
+        }
+        if (typeof pokemon.name !== "string") {
+            return false;
+        }
+        pokemonList.push(pokemon);
+    }
+    // Get one pokemon by name
+    function filter(name) {
+        pokemonList.find(function (pokemon) {
+            return pokemon.name === name;
+        })
+    }
+    // Add button to the list
+    function addListItem(pokemon) {
+        const ul = document.querySelector("ul");
+        const li = document.createElement("li");
+        const button = document.createElement("button");
 
+        button.innerText = pokemon.name;
+        // Addd click listener
+        button.addEventListener("click", function () {
+            showDetails(pokemon);
+        });
+
+        li.appendChild(button);
+        ul.appendChild(li);
+    }
     return {
-        // Get all pokemons
-        getAll: function () {
-            return pokemonList;
-        },
-        // Add pokemon
-        add: function (pokemon) {
-            if (typeof pokemon !== "object") {
-                return false;
-            }
-            if (typeof pokemon.height !== "number") {
-                return false;
-            }
-            if (typeof pokemon.name !== "string") {
-                return false;
-            }
-            pokemonList.push(pokemon);
-        },
-        // Get one pokemon by name
-        filter: function (name) {
-            pokemonList.find(function (pokemon) {
-                return pokemon.name === name;
-            })
-        },
-        // Add button to the list
-        addListItem: function (pokemon) {
-            const ul = document.querySelector("ul");
-            const li = document.createElement("li");
-            const button = document.createElement("button");
+        getAll: getAll, addListItem: addListItem
 
-            button.innerText = pokemon.name;
-            // Addd click listener
-            button.addEventListener("click", function () {
-                showDetails(pokemon);
-            });
 
-            li.appendChild(button);
-            ul.appendChild(li);
-        },
+
     };
-})();
+}) ();
 
 // Get all pokemons
 const pokemons = pokemonRepository.getAll();
