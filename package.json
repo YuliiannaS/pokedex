@@ -1,0 +1,19 @@
+{
+  "name": "travel-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "npm eslint ./js/script.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuliiannaS/travel-blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YuliiannaS/travel-blog/issues"
+  },
+  "homepage": "https://github.com/YuliiannaS/travel-blog#readme"
+}

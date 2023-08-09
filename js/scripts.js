@@ -4,32 +4,32 @@ $(document).ready(function () {
 
         function loadList() {
             return $.ajax({
-                url: "https://pokeapi.co/api/v2/pokemon/",
-                dataType: "json"
+                url: 'https://pokeapi.co/api/v2/pokemon/',
+                dataType: 'json'
             })
-            .then(function (data) {
-                data.results.forEach(function (pokemon) {
-                    add({
-                        name: pokemon.name,
-                        detailsUrl: pokemon.url
+                .then(function (data) {
+                    data.results.forEach(function (pokemon) {
+                        add({
+                            name: pokemon.name,
+                            detailsUrl: pokemon.url
+                        });
                     });
                 });
-            });
         }
 
         function loadDetails(pokemon) {
             return $.ajax({
                 url: pokemon.detailsUrl,
-                dataType: "json"
+                dataType: 'json'
             })
-            .then(function (data) {
-                const pokemonUpdate = pokemonList.find(function (p) {
-                    return p.name === pokemon.name;
+                .then(function (data) {
+                    const pokemonUpdate = pokemonList.find(function (p) {
+                        return p.name === pokemon.name;
+                    });
+                    pokemonUpdate.imgUrl = data.sprites.front_default;
+                    pokemonUpdate.height = data.height;
+                    return pokemonUpdate;
                 });
-                pokemonUpdate.imgUrl = data.sprites.front_default;
-                pokemonUpdate.height = data.height;
-                return pokemonUpdate;
-            });
         }
 
         function showDetails(pokemon) {
@@ -76,7 +76,7 @@ $(document).ready(function () {
 
             // Populate modal content
             modal.find('.modal-title').text(pokemon.name);
-            modal.find('.height').html("Height: " + pokemon.height);
+            modal.find('.height').html('Height: ' + pokemon.height);
             modal.find('img').attr('src', pokemon.imgUrl);
 
             // Show modal using Bootstrap's modal('show') method
@@ -93,22 +93,22 @@ $(document).ready(function () {
         }
 
         function add(pokemon) {
-            if (typeof pokemon !== "object") {
+            if (typeof pokemon !== 'object') {
                 return false;
             }
-            if (typeof pokemon.name !== "string") {
+            if (typeof pokemon.name !== 'string') {
                 return false;
             }
             pokemonList.push(pokemon);
         }
 
         function addListItem(pokemon) {
-            const ul = $("ul");
-            const li = $("<li>").addClass("list-group-item");
-            const button = $("<button>")
-                .addClass("btn btn-primary")
+            const ul = $('ul');
+            const li = $('<li>').addClass('list-group-item');
+            const button = $('<button>')
+                .addClass('btn btn-primary')
                 .text(pokemon.name)
-                .on("click", function () {
+                .on('click', function () {
                     loadDetails(pokemon)
                         .then(function (p) {
                             showDetails(p);
@@ -123,6 +123,7 @@ $(document).ready(function () {
             getAll: getAll,
             addListItem: addListItem,
             loadList: loadList,
+            hideModal: hideModal,
         };
     })();
 
@@ -146,7 +147,7 @@ $(document).ready(function () {
     // Close modal when the Escape key is pressed
     $(window).on('keydown', (e) => {
         if (e.key === 'Escape' && $('#pokemon-modal').hasClass('show')) {
-            hideModal();
+            pokemonRepository.hideModal();
         }
     });
 });
