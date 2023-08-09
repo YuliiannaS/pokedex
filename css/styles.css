@@ -1,1 +1,16 @@
 /* bootstrap in action */
+.container {
+    max-width: 400px;;
+}
+.navbar-nav {
+    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.nav-item {
+    display: inline;
+    width: 50%;
+}
+.nav-item button {
+    width: 100%;
+}

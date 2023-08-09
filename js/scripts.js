@@ -2,12 +2,13 @@ $(document).ready(function () {
     const pokemonRepository = (function () {
         let pokemonList = [];
 
-        function loadList() {
+        function loadList(page) {
             return $.ajax({
-                url: 'https://pokeapi.co/api/v2/pokemon/',
+                url: 'https://pokeapi.co/api/v2/pokemon/?limit=100&offset=' + (page - 1) * 100,
                 dataType: 'json'
             })
                 .then(function (data) {
+                    clean();
                     data.results.forEach(function (pokemon) {
                         add({
                             name: pokemon.name,
@@ -15,6 +16,11 @@ $(document).ready(function () {
                         });
                     });
                 });
+        }
+
+        function clean() {
+            $("#pokemons").empty();
+            pokemonList = [];
         }
 
         function loadDetails(pokemon) {
@@ -103,7 +109,7 @@ $(document).ready(function () {
         }
 
         function addListItem(pokemon) {
-            const ul = $('ul');
+            const ul = $('ul#pokemons');
             const li = $('<li>').addClass('list-group-item');
             const button = $('<button>')
                 .addClass('btn btn-primary')
@@ -128,16 +134,24 @@ $(document).ready(function () {
     })();
 
     // Load pokemons and add them to the list
-    pokemonRepository.loadList()
-        .then(function () {
-            const pokemons = pokemonRepository.getAll();
-            pokemons.forEach(function (pokemon) {
-                pokemonRepository.addListItem(pokemon);
+    function loadPokemons(page) {
+        pokemonRepository.loadList(page)
+            .then(function () {
+                const pokemons = pokemonRepository.getAll();
+                pokemons.forEach(function (pokemon) {
+                    pokemonRepository.addListItem(pokemon);
+                });
+            })
+            .catch(function (error) {
+                console.error(error);
             });
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
+    }
+    loadPokemons(1);
+
+    $("#navbarNav .btn").on("click", function() {
+        const page = $(this).data("page");
+        loadPokemons(page);
+    });
 
     // Show modal when the button is clicked
     $('#show-modal').on('click', () => {
