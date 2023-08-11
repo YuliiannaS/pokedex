@@ -1,6 +1,6 @@
 # Pokemon list
 ## Welcome to the Pokémon List project!
-### The project is built using HTML, CSS, and JavaScript, along with the Bootstrap framework for styling.
+The project is built using HTML, CSS, and JavaScript, along with the Bootstrap framework for styling.
 ##  Overview
 This project allows you to explore and view details of various Pokémon using an interactive web interface.
 ## Features
